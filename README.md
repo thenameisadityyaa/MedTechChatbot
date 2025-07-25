@@ -151,6 +151,6 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## 📷 Demo Preview
 
-[🔗 HealthAssist Preview](https://drive.google.com/file/d/1kJtJIl5vhfA7GppgGensP0EotPlROq9z/view?usp=sharing)
+[🔗 HealthAssist Preview](https://drive.google.com/file/d/1QVdWm3YcnQvMtRtEnesSl8zovD9iV9BJ/view?usp=drive_link)
 
 ---
