@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HealthAssist - Home</title>
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1 class="logo">HealthAssist</h1>
+      <nav>
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="home.html" class="nav-link">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h2>Welcome to Your Trusted Health Companion</h2>
+        <p>
+          Get personalized medicine recommendations based on your symptoms. 
+          Stay informed, stay healthy.
+        </p>
+      </div>
+    </section>
+
+    <section class="features container" aria-label="Main Features">
+      <article class="feature" onclick="location.href='symptom.html'" tabindex="0" role="link" aria-label="Symptom Checker">
+        <h3>Symptom Checker</h3>
+        <p>Input your symptoms and receive expert medicine recommendations instantly.</p>
+      </article>
+      <article class="feature" onclick="location.href='health-history.html'" tabindex="0" role="link" aria-label="Health History">
+        <h3>Health History</h3>
+        <p>Track your previous symptoms and medicines for better continuous care.</p>
+      </article>
+      <article class="feature" onclick="location.href='medicine-availability.html'" tabindex="0" role="link" aria-label="Medicine Availability">
+        <h3>Medicine Availability</h3>
+        <p>Check if your prescribed medicines are available or not.</p>
+        </article>
+
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 HealthAssist. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Floating AI Button -->
+  <div class="ai-consult-wrapper">
+    <button class="ai-button" title="Consult with AI">
+      <img src="https://cdn-icons-png.flaticon.com/512/4712/4712027.png" alt="AI" class="ai-icon" />
+    </button>
+    <div class="ai-label">Consult with AI</div>
+  </div>
+
+  <script src="index.js"></script>
+</body>
+</html>

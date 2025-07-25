@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HealthAssist - Health History</title>
+  <link rel="stylesheet" href="health-history.css" />
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1 class="logo">HealthAssist</h1>
+      <nav>
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="login.html" class="nav-link">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="checker-section">
+      <h2>📝 Health History Log</h2>
+      <p>Fill out the form below to store your health history details.</p>
+
+      <form id="history-form">
+        <div class="form-group">
+          <label for="entry-date">Date</label>
+          <input type="date" id="entry-date" required />
+        </div>
+
+        <div class="form-group">
+          <label for="symptoms">Symptoms</label>
+          <textarea id="symptoms" rows="3" placeholder="e.g. headache, cough..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="severity">Severity</label>
+          <select id="severity" required>
+            <option value="">Select severity</option>
+            <option value="Mild">Mild</option>
+            <option value="Moderate">Moderate</option>
+            <option value="Severe">Severe</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="medicines">Recommended Medicines</label>
+          <input type="text" id="medicines" placeholder="E.g. Paracetamol, Ibuprofen" required />
+        </div>
+
+        <div class="form-group">
+          <label for="dosage">Dosage & Duration</label>
+          <input type="text" id="dosage" placeholder="E.g. 500mg, twice daily for 5 days" required />
+        </div>
+
+        <div class="form-group">
+          <label for="feedback">Your Feedback</label>
+          <textarea id="feedback" rows="2" placeholder="How was the treatment?"></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary">Add Entry</button>
+      </form>
+    </section>
+
+    <section class="history-list">
+      <h3>📋 Past Health Entries</h3>
+      <table id="history-table" aria-label="Health History Table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Symptoms</th>
+            <th>Severity</th>
+            <th>Medicines</th>
+            <th>Dosage</th>
+            <th>Feedback</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Dynamically filled -->
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 HealthAssist. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="health-history.js"></script>
+</body>
+</html>

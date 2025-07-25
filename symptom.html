@@ -1,0 +1,61 @@
+<!-- symptom.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Symptom Checker - HealthAssist</title>
+  <link rel="stylesheet" href="symptom.css" />
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1 class="logo">HealthAssist</h1>
+      <nav>
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="login.html" class="nav-link">Login</a>
+        <a href="symptom.html" class="nav-link active">Symptom Checker</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="checker-section">
+      <h2>Symptom Checker</h2>
+      <p>Enter your symptoms below, separated by commas.</p>
+
+      <form id="symptomForm">
+        <label for="symptomInput" class="sr-only">Symptoms</label>
+        <textarea 
+          id="symptomInput" 
+          placeholder="e.g. headache, fever, cough..." 
+          rows="5"
+          required
+        ></textarea>
+
+        <div class="voice-control">
+          <button type="button" id="voiceBtn" title="Speak symptoms">🎤 Speak</button>
+          <span id="voice-status" class="voice-status hidden">Listening...</span>
+        </div>
+
+        <button type="submit" id="submitBtn" style="margin-top: 12px;">
+          Check Medicine Recommendation
+        </button>
+
+        <ul id="suggestions" class="suggestion-box hidden"></ul>
+      </form>
+
+      <div id="loading" class="hidden">Checking symptoms, please wait...</div>
+      <div id="result" class="hidden" role="region" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 HealthAssist. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="symptom.js"></script>
+</body>
+</html>

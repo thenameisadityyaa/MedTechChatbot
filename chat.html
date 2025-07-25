@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat Assistant - HealthAssist</title>
+  <link rel="stylesheet" href="chat.css" />
+</head>
+<body>
+  <div class="chat-wrapper">
+    <header class="chat-header">
+      <a href="index.html" class="back-link">← Back to Home</a>
+      <h1>Consult with AI</h1>
+    </header>
+
+    <main class="chat-main">
+      <div id="assistantWelcome" class="assistant-welcome">
+        <img src="https://cdn-icons-png.flaticon.com/512/4712/4712027.png" alt="Assistant Icon" />
+        <h2>Hello! I’m your AI Assistant 🤖</h2>
+        <p>Start by saying <strong>"Hey Buddy"</strong> or typing your message below.</p>
+      </div>
+
+      <div id="chatHistory" class="chat-history"></div>
+
+      <div class="chat-box">
+        <textarea id="userPrompt" placeholder="Type your message..."></textarea>
+        <button id="sendBtn">Send</button>
+        <label class="mic-toggle">
+          <input type="checkbox" id="micToggle" checked />
+          <span class="slider"></span>
+        </label>
+      </div>
+    </main>
+
+    <div class="voice-indicator" title="Listening..."></div>
+    <audio id="beep" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg" preload="auto"></audio>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+        alert("⚠️ Your browser doesn't support speech recognition. Please use Chrome.");
+        return;
+      }
+
+      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      const synth = window.speechSynthesis;
+      const beep = document.getElementById("beep");
+      const chatHistory = document.getElementById("chatHistory");
+      const sendBtn = document.getElementById("sendBtn");
+      const micToggle = document.getElementById("micToggle");
+      const inputField = document.getElementById("userPrompt");
+
+      let isVoiceResponseEnabled = micToggle.checked;
+      let isWakeWordDetected = false;
+      let isRecognitionActive = false;
+      let hasSpokenAfterWakeWord = false;
+      let timeout = null;
+
+      micToggle.addEventListener("change", () => {
+        isVoiceResponseEnabled = micToggle.checked;
+        if (!isVoiceResponseEnabled) synth.cancel();
+      });
+
+      recognition.lang = "en-US";
+      recognition.continuous = false;
+      recognition.interimResults = false;
+
+      recognition.onresult = async (event) => {
+        clearTimeout(timeout);
+        recognition.stop();
+        isRecognitionActive = false;
+
+        const userPrompt = event.results[0][0].transcript.trim().toLowerCase();
+        console.log("🎙️ Heard:", userPrompt);
+
+        if (!isVoiceResponseEnabled) return;
+
+        if (!isWakeWordDetected && userPrompt.includes("hey buddy")) {
+          isWakeWordDetected = true;
+          hasSpokenAfterWakeWord = false;
+          beep.play();
+          speak("Yes boss, how can I help you?", () => {
+            startListening();
+          });
+          return;
+        }
+
+        if (!isWakeWordDetected) {
+          startWakeDetection();
+          return;
+        }
+
+        hasSpokenAfterWakeWord = true;
+        document.getElementById("assistantWelcome").style.display = "none";
+        display(userPrompt, "user");
+        await sendToBot(userPrompt);
+      };
+
+      recognition.onerror = (e) => {
+        console.warn("Speech error:", e.error);
+        isRecognitionActive = false;
+        startWakeDetection();
+      };
+
+      recognition.onend = () => {
+        isRecognitionActive = false;
+        startWakeDetection();
+      };
+
+      function getTimeStamp() {
+        const now = new Date();
+        return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      }
+
+      function display(text, type) {
+        const msg = document.createElement("div");
+        msg.className = type === "user" ? "user-message" : "bot-message";
+
+        const span = document.createElement("span");
+        span.className = "timestamp";
+        span.textContent = getTimeStamp();
+
+        msg.innerHTML = `<strong>${type === "user" ? "You" : "Bot"}:</strong> ${text}`;
+        msg.appendChild(span);
+
+        chatHistory.appendChild(msg);
+        chatHistory.scrollTop = chatHistory.scrollHeight;
+      }
+
+      async function sendToBot(prompt) {
+        const loading = document.createElement("div");
+        loading.className = "bot-message loading";
+        loading.innerHTML = `<span class="dot"></span><span class="dot"></span><span class="dot"></span>`;
+        chatHistory.appendChild(loading);
+        chatHistory.scrollTop = chatHistory.scrollHeight;
+
+        try {
+          const res = await fetch("http://localhost:5000/api/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: prompt })
+          });
+
+          chatHistory.removeChild(loading);
+
+          if (!res.ok) return display("Server error", "bot");
+
+          const data = await res.json();
+          if (data.response) {
+            display(data.response, "bot");
+            if (isVoiceResponseEnabled) {
+              speak(data.response, () => {
+                isWakeWordDetected = false;
+                startWakeDetection();
+              });
+            } else {
+              isWakeWordDetected = false;
+              startWakeDetection();
+            }
+          } else {
+            display("No response received", "bot");
+            isWakeWordDetected = false;
+            startWakeDetection();
+          }
+        } catch (err) {
+          console.error("Bot fetch error:", err);
+          chatHistory.removeChild(loading);
+          display("Server error", "bot");
+          isWakeWordDetected = false;
+          startWakeDetection();
+        }
+      }
+
+      function speak(text, cb) {
+        if (!isVoiceResponseEnabled) return;
+
+        try { recognition.abort(); } catch {}
+
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = "en-US";
+        utterance.onend = () => {
+          console.log("✅ Speech ended");
+          if (cb) cb();
+        };
+        synth.speak(utterance);
+      }
+
+      function startListening() {
+        if (!isVoiceResponseEnabled || isRecognitionActive) return;
+
+        const waitUntilSpeechEnds = setInterval(() => {
+          if (!synth.speaking) {
+            clearInterval(waitUntilSpeechEnds);
+            try {
+              recognition.start();
+              isRecognitionActive = true;
+              timeout = setTimeout(() => {
+                try { recognition.stop(); } catch {}
+                if (isWakeWordDetected && !hasSpokenAfterWakeWord) {
+                  isWakeWordDetected = false;
+                  startWakeDetection();
+                }
+              }, 7000);
+            } catch (err) {
+              console.error("Start Listening Error:", err);
+              isRecognitionActive = false;
+            }
+          }
+        }, 300);
+      }
+
+      function startWakeDetection() {
+        if (isRecognitionActive || !isVoiceResponseEnabled) return;
+
+        const waitUntilSpeechEnds = setInterval(() => {
+          if (!synth.speaking) {
+            clearInterval(waitUntilSpeechEnds);
+            try {
+              recognition.start();
+              isRecognitionActive = true;
+            } catch (err) {
+              console.error("Wake detection error:", err);
+              isRecognitionActive = false;
+            }
+          }
+        }, 300);
+      }
+
+      sendBtn.addEventListener("click", () => {
+        const msg = inputField.value.trim();
+        if (msg) {
+          document.getElementById("assistantWelcome").style.display = "none";
+          display(msg, "user");
+          sendToBot(msg);
+          inputField.value = "";
+        }
+      });
+
+      inputField.addEventListener("keypress", e => {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          sendBtn.click();
+        }
+      });
+
+      startWakeDetection();
+    });
+  </script>
+</body>
+</html>
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 HealthAssist. All rights reserved.</p>
+    </div>
+  </footer>
+
+  

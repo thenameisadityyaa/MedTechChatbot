@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact Us - HealthAssist</title>
+  <link rel="stylesheet" href="contact.css" />
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1 class="logo">HealthAssist</h1>
+      <nav>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link active">Contact</a>
+        <a href="home.html" class="nav-link">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h2>Contact Us</h2>
+      <p>We're here to help. Reach out with any questions or suggestions!</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <section class="contact-section">
+      <form id="contactForm">
+        <input type="text" id="name" placeholder="Your Name" required />
+        <input type="email" id="email" placeholder="Your Email" required />
+        <select id="subject" required>
+          <option value="">-- Select Subject --</option>
+          <option>Feedback</option>
+          <option>Technical Issue</option>
+          <option>Medicine Help</option>
+          <option>Other</option>
+        </select>
+        <textarea id="message" rows="6" placeholder="Your Message" required></textarea>
+        <button type="submit" class="btn">Send Message</button>
+      </form>
+
+      <div class="contact-info">
+        <p><strong>Email:</strong> support@healthassist.com</p>
+        <p><strong>Phone:</strong> +91 98765 XXXXX</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 HealthAssist. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Floating AI Button -->
+  <div class="ai-consult-wrapper">
+    <button class="ai-button" title="Consult with AI">
+      <img src="https://cdn-icons-png.flaticon.com/512/4712/4712027.png" alt="AI" class="ai-icon" />
+    </button>
+    <div class="ai-label">Consult with AI</div>
+  </div>
+
+  <script src="contact.js"></script>
+</body>
+</html>

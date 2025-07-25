@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Medicine Inventory - HealthAssist</title>
+  <link rel="stylesheet" href="medicine-availability.css" />
+</head>
+<body>
+  <!-- Header/Navbar -->
+  <header>
+    <div class="container">
+      <h1 class="logo">HealthAssist</h1>
+      <nav>
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="home.html" class="nav-link">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Summary Cards -->
+    <section class="summary-cards">
+      <div class="card">
+        <h2 id="totalMedicines">0</h2>
+        <p>Total Medicines</p>
+      </div>
+      <div class="card warning">
+        <h2 id="lowStockCount">0</h2>
+        <p>Low Stock</p>
+      </div>
+      <div class="card danger">
+        <h2 id="expiringSoonCount">0</h2>
+        <p>Expiring Soon</p>
+      </div>
+    </section>
+
+    <!-- Add/Edit Medicine Form -->
+    <section class="form-section">
+      <h2 id="formTitle">Add New Medicine</h2>
+      <form id="medicineForm">
+        <input type="hidden" id="editIndex" value="" />
+        <input type="text" id="medicineName" placeholder="Medicine Name" required />
+        <input type="number" id="quantity" placeholder="Quantity" required />
+        <input type="date" id="expiry" placeholder="Expiry Date" />
+        <button type="submit">💾 Save Medicine</button>
+      </form>
+    </section>
+
+    <!-- Inventory Table -->
+    <section class="inventory-section">
+      <input type="text" id="searchInput" placeholder="Search medicines..." />
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Medicine</th>
+            <th>Quantity</th>
+            <th>Expiry</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="medicineTableBody">
+          <!-- JS Populated -->
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 HealthAssist. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="medicine-availability.js"></script>
+</body>
+</html>

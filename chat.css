@@ -1,0 +1,272 @@
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html, body {
+  height: 100%;
+  background: linear-gradient(to right, #e0f2f1, #ffffff);
+  color: #004d40;
+}
+
+/* Layout */
+.chat-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Header */
+.chat-header {
+  background-color: #004d40;
+  color: #e0f2f1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.chat-header h1 {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.back-link {
+  color: #a7ffeb;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+.back-link:hover {
+  color: white;
+}
+
+/* Main */
+.chat-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Chat History */
+.chat-history {
+  flex-grow: 1;
+  padding: 1rem 1.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  scroll-behavior: smooth;
+}
+
+/* Chat Bubbles */
+.user-message,
+.bot-message {
+  max-width: 75%;
+  padding: 0.9rem 1.2rem;
+  border-radius: 20px;
+  font-size: 1rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.user-message {
+  background-color: #00796b;
+  color: #fff;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+.bot-message {
+  background-color: #cceee7;
+  color: #004d40;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+
+/* Input Area */
+.chat-box {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-top: 1px solid #ccc;
+  background-color: #ffffff;
+  position: sticky;
+  bottom: 0;
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.06);
+}
+
+.chat-box textarea {
+  flex: 1;
+  border: 2px solid #004d40;
+  border-radius: 10px;
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  resize: none;
+  min-height: 42px;
+  max-height: 100px;
+}
+
+.chat-box textarea:focus {
+  outline: none;
+  border-color: #00796b;
+}
+
+/* Send Button */
+.chat-box button {
+  background-color: #00796b;
+  color: #e0f2f1;
+  padding: 0.6rem 1.2rem;
+  font-weight: bold;
+  font-size: 1rem;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.chat-box button:hover {
+  background-color: #004d40;
+}
+
+/* Toggle Switch */
+.mic-toggle {
+  display: flex;
+  align-items: center;
+}
+
+.mic-toggle input[type="checkbox"] {
+  display: none;
+}
+
+.slider {
+  width: 46px;
+  height: 24px;
+  background-color: #ccc;
+  border-radius: 24px;
+  position: relative;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 3px;
+  top: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+input:checked + .slider {
+  background-color: #00796b;
+}
+
+input:checked + .slider::before {
+  transform: translateX(22px);
+}
+
+/* Voice Pulse */
+.voice-indicator {
+  position: fixed;
+  bottom: 85px;
+  right: 25px;
+  width: 14px;
+  height: 14px;
+  background-color: #3b82f6;
+  border-radius: 50%;
+  animation: pulse 1.4s infinite;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
+  z-index: 1000;
+}
+
+/* Welcome Box */
+.assistant-welcome {
+  background-color: #c8f5ec;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  border-radius: 14px;
+  margin: 1rem auto;
+  max-width: 520px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.5s ease;
+}
+
+.assistant-welcome img {
+  width: 60px;
+  margin-bottom: 1rem;
+}
+
+.assistant-welcome h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.assistant-welcome p {
+  font-size: 1rem;
+  color: #00695c;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%   { transform: scale(1); opacity: 1; }
+  50%  { transform: scale(1.4); opacity: 0.4; }
+  100% { transform: scale(1); opacity: 1; }
+}
+/* Timestamp */
+.timestamp {
+  display: block;
+  font-size: 0.75rem;
+  margin-top: 4px;
+  color: #550707;
+  opacity: 0.7;
+  text-align: right;
+}
+
+/* Loading Dots Animation */
+.loading {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.loading .dot {
+  width: 8px;
+  height: 8px;
+  background-color: #004d40;
+  border-radius: 50%;
+  animation: blink 1.4s infinite both;
+}
+
+.loading .dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.loading .dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes blink {
+  0%, 80%, 100% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+}

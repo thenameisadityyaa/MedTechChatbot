@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HealthAssist Login/Signup</title>
+  <link rel="stylesheet" href="login.css" />
+</head>
+<body>
+  <div class="container">
+    <h2 id="form-title">Login to HealthAssist</h2>
+
+    <!-- LOGIN -->
+    <div id="login-form" class="form-section active">
+      <label for="login-id">Username, Email or Phone</label>
+      <input type="text" id="login-id" placeholder="Enter login ID" />
+      
+      <label for="login-password">Password</label>
+      <input type="password" id="login-password" placeholder="Enter password" />
+      
+      <button onclick="handleLogin()">Login</button>
+      <p class="toggle-link">Don’t have an account? <a onclick="toggleForm()">Sign up</a></p>
+    </div>
+
+    <!-- SIGNUP -->
+    <div id="signup-form" class="form-section">
+      <div id="signup-step-1" class="step">
+        <label for="signup-contact">Email or Phone</label>
+        <input type="text" id="signup-contact" placeholder="Enter email or phone" />
+        <button onclick="sendSignupOTP()">Send OTP</button>
+      </div>
+
+      <div id="signup-step-2" class="step">
+        <label for="signup-otp">Enter OTP</label>
+        <input type="text" id="signup-otp" placeholder="Enter OTP" />
+        <button onclick="verifySignupOTP()">Verify OTP</button>
+      </div>
+
+      <div id="signup-step-3" class="step">
+        <label for="signup-username">Username</label>
+        <input type="text" id="signup-username" placeholder="Choose a username" />
+
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" placeholder="Create a password" />
+
+        <label for="signup-confirm">Confirm Password</label>
+        <input type="password" id="signup-confirm" placeholder="Confirm password" />
+
+        <button onclick="completeSignup()">Create Account</button>
+      </div>
+
+      <p class="toggle-link">Already have an account? <a onclick="toggleForm()">Login</a></p>
+    </div>
+
+    <p id="message"></p>
+  </div>
+
+  <script src="login.js"></script>
+</body>
+</html>
